@@ -1,0 +1,85 @@
+.otp-container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #262523;
+  color: white;
+}
+
+.otp-box {
+  height: 24rem; /* h-96 */
+  width: 420px;
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+  background-color: #0e0e0e;
+  opacity: 0.9;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease-in-out;
+}
+
+.otp-box:hover {
+  transform: scale(1.05);
+}
+
+.otp-title {
+  font-size: 1.875rem; /* text-3xl */
+  font-weight: 500;
+}
+
+.otp-subtitle {
+  margin: 1.5rem 0;
+}
+
+.otp-input {
+  height: 3rem;
+  width: 93%;
+  padding: 0 0.75rem;
+  border-radius: 0.375rem;
+  margin-top: 1rem;
+  color: black;
+  outline: none;
+  appearance: none;
+}
+
+.otp-input::-webkit-outer-spin-button,
+.otp-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.otp-submit,
+.otp-resend {
+  height: 3rem;
+  width: 100%;
+  margin-top: 2rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  transition: all 0.2s;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.otp-submit {
+  background-color: white;
+  color: black;
+}
+
+.otp-submit:hover {
+  font-size: 1.125rem;
+}
+
+.otp-resend {
+  background-color: white;
+  color: black;
+}
+
+.otp-resend:hover {
+  font-size: 1.125rem;
+}
+
+.otp-resend.disabled {
+  background-color: #9ca3af; /* gray-400 */
+  cursor: not-allowed;
+}
