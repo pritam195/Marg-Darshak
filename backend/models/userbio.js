@@ -14,6 +14,9 @@ let userBioSchema = new mongoose.Schema({
     resume: {
         type: String
     },
+    profile_photo: {
+        type: String,
+    },
     educational_details: [{
         standard: String,
         marks: String,

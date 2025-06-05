@@ -22,6 +22,7 @@ const ProfileCom = () => {
     username: "",
     bio: "",
     resume: "",
+    profile_photo: "",
     educational_details: [{
       standard: "",
       marks: "",
@@ -40,11 +41,15 @@ const ProfileCom = () => {
       features: [""]
     }]
   })
+
+  let [newProfilePhoto, setNewProfilePhoto] = useState("")
+
   let [isBioEditing, setIsBioEditing] = useState(false)
   let [isResumeEditing, setIsResumeEditing] = useState(false)
   let [isEducationEditing, setIsEducationEditing] = useState(false)
   let [isSocialLinksEditing, setIsSocialLinksEditing] = useState(false)
   let [isWorkExpEditing, setIsWorkExpEditing] = useState(false)
+  let [isProfilePhotoEditing, setIsProfilePhotoEditing] = useState(false)
 
   useEffect(() => {
     async function handleFetchUserInfo() {
@@ -65,7 +70,7 @@ const ProfileCom = () => {
       }
     }
     handleFetchUserInfo()
-  }, [username])
+  }, [username, userBio.profile_photo])
 
   function handleInputChange(e, name, i, j) {
     if (name === "bio")
@@ -167,11 +172,28 @@ const ProfileCom = () => {
         headers: {
           'Content-Type': "application/json"
         },
-        body: JSON.stringify({ filteredUserBio })
+        body: JSON.stringify({ userBio: filteredUserBio })
       })
-      const data = await response.json()
       if (response.ok) {
         setUserBio(filteredUserBio)
+      }
+    }
+    catch (error) {
+      alert("An error occurred. Please refresh and try again.");
+      navigate("/")
+    }
+  }
+
+  async function handleSaveProfileChanges() {
+    let formData = new FormData()
+    formData.append("profile_photo", newProfilePhoto)
+    try {
+      let response = await fetch(`http://localhost:8000/${username}/profile/profile-photo`, {
+        method: "POST",
+        body: formData
+      })
+      if (response.ok) {
+        setUserBio(prev => ({ ...prev, profile_photo: URL.createObjectURL(newProfilePhoto) }))
       }
     }
     catch (error) {
@@ -183,7 +205,17 @@ const ProfileCom = () => {
   return (
     <div className="profile-container">
       <div className="personal-info">
-        <img src={userInfo.profile_photo} alt="" />
+        <img src={userInfo.profile_photo} alt="profile_photo" />
+        {isProfilePhotoEditing ?
+          <div>
+            <input type='file' onChange={(e) => setNewProfilePhoto(e.target.files[0])} />
+            <MdDone onClick={() => { setIsProfilePhotoEditing(false); handleSaveProfileChanges() }} />
+          </div>
+          :
+          <div>
+            <LiaEditSolid onClick={() => setIsProfilePhotoEditing(true)} />
+          </div>
+        }
         <div className="personal-info-text">
           <h2>Name <span> {userInfo.fullname} </span></h2>
           <h2>Username <span> {userInfo.username} </span></h2>

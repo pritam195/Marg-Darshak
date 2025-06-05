@@ -90,3 +90,7 @@
   background: #ccc;
   border-radius: 10px;
 }
+.selected {
+  font-weight: bold;
+}
+

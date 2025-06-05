@@ -1,124 +1,61 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './MentorRight.css'
-import profileimage from '../../assets/profileimage.jpg'
+import { Context } from '../../Pages/Mentor/Mentor'
 
 const MentorRight = () => {
-  return (
-    <div className='right-container'>
-      
-      <div className="card-container">
-        <div className="card">
-            <img src={profileimage} alt="" />
-            <div className="card-text">
-                <h2>Name : Pritam Chavan</h2>
-                <h4>Job Role : SDE Google</h4>
-                <h4>Years of Experience : 4 years</h4>
-                <h4>Location : Mumbai</h4>
-                <button>Follow</button>
-                <p>Click here for more <a href="">details</a></p>
+
+    let username = window.localStorage.getItem("username")
+    let [mentorsData, setMentorsData] = useContext(Context)
+
+    useEffect(() => {
+        async function handleFetchMentorsData() {
+            try {
+                const response = await fetch("http://localhost:8000/mentor", {
+                    method: "GET"
+                })
+                if (response.ok) {
+                    let data = await response.json()
+                    if (data)
+                        setMentorsData(data)
+                }
+            }
+            catch (error) {
+                alert("An error occurred. Please try again.");
+                navigate("/")
+            }
+        }
+        handleFetchMentorsData()
+    }, [username])
+
+    return (
+        <div className='right-container'>
+
+            <div className="card-container">
+
+                {mentorsData.length > 0 ?
+                    <div>
+                        {mentorsData.map((mentor, i) =>
+                            <div key={i} className="card">
+                                <img src={mentor.profile_photo} alt="" />
+                                <div className="card-text">
+                                    <h2>Name : {mentor.username}</h2>
+                                    <h4>Job Role : {mentor.work_experience[0].role}</h4>
+                                    <h4>Years of Experience : {mentor.work_experience[0].duration}</h4>
+                                    <h4>Location : {mentor.work_experience[0].place}</h4>
+                                    <button>Follow</button>
+                                    <p>Click here for more <a href="">details</a></p>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                    :
+                    <p>No mentors found</p>
+                }
+
             </div>
-        </div>
-
-        <div className="card">
-            <img src={profileimage} alt="" />
-            <div className="card-text">
-                <h2>Name : Pritam Chavan</h2>
-                <h4>Job Role : SDE Google</h4>
-                <h4>Years of Experience : 4 years</h4>
-                <h4>Location : Mumbai</h4>
-                <button>Follow</button>
-                <p>Click here for more <a href="">details</a></p>
-            </div>
-        </div>
-
-        <div className="card">
-            <img src={profileimage} alt="" />
-            <div className="card-text">
-                <h2>Name : Pritam Chavan</h2>
-                <h4>Job Role : SDE Google</h4>
-                <h4>Years of Experience : 4 years</h4>
-                <h4>Location : Mumbai</h4>
-                <button>Follow</button>
-                <p>Click here for more <a href="">details</a></p>
-            </div>
-        </div>
-
-        <div className="card">
-            <img src={profileimage} alt="" />
-            <div className="card-text">
-                <h2>Name : Pritam Chavan</h2>
-                <h4>Job Role : SDE Google</h4>
-                <h4>Years of Experience : 4 years</h4>
-                <h4>Location : Mumbai</h4>
-                <button>Follow</button>
-                <p>Click here for more <a href="">details</a></p>
-            </div>
-        </div>
-
-        <div className="card">
-            <img src={profileimage} alt="" />
-            <div className="card-text">
-                <h2>Name : Pritam Chavan</h2>
-                <h4>Job Role : SDE Google</h4>
-                <h4>Years of Experience : 4 years</h4>
-                <h4>Location : Mumbai</h4>
-                <button>Follow</button>
-                <p>Click here for more <a href="">details</a></p>
-            </div>
-        </div>
-
-        <div className="card">
-            <img src={profileimage} alt="" />
-            <div className="card-text">
-                <h2>Name : Pritam Chavan</h2>
-                <h4>Job Role : SDE Google</h4>
-                <h4>Years of Experience : 4 years</h4>
-                <h4>Location : Mumbai</h4>
-                <button>Follow</button>
-                <p>Click here for more <a href="">details</a></p>
-            </div>
-        </div>
-
-        <div className="card">
-            <img src={profileimage} alt="" />
-            <div className="card-text">
-                <h2>Name : Pritam Chavan</h2>
-                <h4>Job Role : SDE Google</h4>
-                <h4>Years of Experience : 4 years</h4>
-                <h4>Location : Mumbai</h4>
-                <button>Follow</button>
-                <p>Click here for more <a href="">details</a></p>
-            </div>
-        </div>
-
-        <div className="card">
-            <img src={profileimage} alt="" />
-            <div className="card-text">
-                <h2>Name : Pritam Chavan</h2>
-                <h4>Job Role : SDE Google</h4>
-                <h4>Years of Experience : 4 years</h4>
-                <h4>Location : Mumbai</h4>
-                <button>Follow</button>
-                <p>Click here for more <a href="">details</a></p>
-            </div>
-        </div>
-
-        <div className="card">
-            <img src={profileimage} alt="" />
-            <div className="card-text">
-                <h2>Name : Pritam Chavan</h2>
-                <h4>Job Role : SDE Google</h4>
-                <h4>Years of Experience : 4 years</h4>
-                <h4>Location : Mumbai</h4>
-                <button>Follow</button>
-                <p>Click here for more <a href="">details</a></p>
-            </div>
-        </div>
 
         </div>
-
-    </div>
-  )
+    )
 }
 
 export default MentorRight

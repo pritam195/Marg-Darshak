@@ -62,7 +62,7 @@ const SignUpCom = () => {
       return
     }
     if (userInfo.mobNo.length !== 10) {
-      alert("Mobile number should not be a digit valid number.")
+      alert("Mobile number should be a valid 10 digit number.")
       return
     }
     if (!userInfo.email.endsWith("@gmail.com") && !userInfo.email.endsWith("vjti.ac.in")) {
